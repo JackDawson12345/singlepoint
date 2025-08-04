@@ -1,6 +1,7 @@
 class Admin::ComponentsController < ApplicationController
   before_action :set_component, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
+  before_action :authenticate_admin!
   layout 'admin'
 
   # GET /admin/components

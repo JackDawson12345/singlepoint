@@ -61,4 +61,10 @@ Rails.application.routes.draw do
     delete "/theme-pages/:id", to: 'theme_pages#destroy'
 
   end
+
+  namespace :manage do
+    # Dashboard
+    get "/", to: 'dashboard#index', as: 'dashboard'
+
+  end
 end

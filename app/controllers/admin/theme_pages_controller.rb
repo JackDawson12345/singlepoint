@@ -1,6 +1,7 @@
 class Admin::ThemePagesController < ApplicationController
   before_action :set_theme_page, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :authenticate_admin!
   layout 'admin'
 
   def index
