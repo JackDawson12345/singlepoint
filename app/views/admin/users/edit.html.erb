@@ -1,0 +1,17 @@
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Edit User</h1>
+    <p class="mt-2 text-sm text-gray-600">Update <%= @user.first_name %> <%= @user.last_name %>'s information and role.</p>
+  </div>
+
+  <%= render 'form', user: @user %>
+
+  <div class="mt-6 flex space-x-3">
+    <%= link_to "← Back to User", admin_users_show_path(@user),
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <%= link_to "Reset Password", admin_users_reset_password_path(@user),
+                class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" %>
+    <%= link_to "View All Users", admin_users_path,
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
+</div>

@@ -1,0 +1,70 @@
+<% content_for :title, "Theme Pages" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Theme Pages</h1>
+  <%= link_to 'New Theme Page', admin_theme_pages_new_path, class: 'btn btn-primary' %>
+</div>
+
+<% if @theme_pages.any? %>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Theme</th>
+        <th>Page Type</th>
+        <th>Component Order</th>
+        <th>Package</th>
+        <th>Created At</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @theme_pages.each do |theme_page| %>
+        <tr>
+          <td><%= theme_page.id %></td>
+          <td>
+            <% if theme_page.theme %>
+              <%= link_to theme_page.theme.name, admin_theme_pages_path(theme_page) %>
+            <% else %>
+              <span class="text-muted">No theme</span>
+            <% end %>
+          </td>
+          <td>
+            <span class="badge badge-info"><%= theme_page.page_type %></span>
+          </td>
+          <td>
+            <% if theme_page.component_order.present? %>
+              <%= truncate(theme_page.component_order, length: 50) %>
+            <% else %>
+              <span class="text-muted">None</span>
+            <% end %>
+          </td>
+          <td>
+            <% if theme_page.package.present? %>
+              <%= truncate(theme_page.package, length: 50) %>
+            <% else %>
+              <span class="text-muted">None</span>
+            <% end %>
+          </td>
+          <td><%= theme_page.created_at.strftime("%B %d, %Y") %></td>
+          <td>
+            <%= link_to 'Show', admin_theme_pages_show_path(theme_page), class: 'btn btn-sm btn-outline-primary' %>
+            <%= link_to 'Edit', admin_theme_pages_edit_path(theme_page), class: 'btn btn-sm btn-outline-secondary' %>
+            <%= link_to 'Delete', admin_theme_pages_path(theme_page),
+                        method: :delete,
+                        class: 'btn btn-sm btn-outline-danger',
+                        confirm: 'Are you sure you want to delete this theme page?' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="text-center py-5">
+    <h3 class="text-muted">No theme pages found</h3>
+    <p class="text-muted">Get started by creating your first theme page.</p>
+    <%= link_to 'Create Theme Page', admin_theme_pages_new_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

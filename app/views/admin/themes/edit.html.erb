@@ -1,0 +1,16 @@
+<!-- app/views/admin/themes/edit.html.erb -->
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Edit Theme</h1>
+    <p class="mt-2 text-sm text-gray-600">Update <%= @theme.name %>'s information and preview image.</p>
+  </div>
+
+  <%= render 'form' %>
+
+  <div class="mt-6 flex space-x-3">
+    <%= link_to "← Back to Theme", admin_themes_show_path(@theme),
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <%= link_to "View All Themes", admin_themes_path,
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
+</div>

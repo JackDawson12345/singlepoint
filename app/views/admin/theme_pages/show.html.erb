@@ -1,0 +1,81 @@
+<!-- Main Theme Page Layout -->
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white shadow-sm border border-gray-200 overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div class="flex-1">
+        <h3 class="text-xl leading-6 font-semibold text-gray-900"><%= @theme.name %> - <%= @themePage.page_type %></h3>
+        <p class="mt-2 max-w-2xl text-sm text-gray-600"><%= @theme.description %></p>
+      </div>
+      <div class="flex flex-wrap gap-2 sm:gap-3">
+        <%= link_to "Edit Page", admin_theme_pages_edit_path(id: @theme.id, theme_page_id: @themePage.id),
+                    class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200" %>
+        <%= link_to "Edit Theme", admin_themes_edit_path(@theme),
+                    class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200" %>
+        <%= link_to "Back To Theme", admin_themes_show_path(id: @theme.id),
+                    class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <!-- Available Components -->
+    <div class="bg-white shadow-sm border border-gray-200 overflow-hidden sm:rounded-lg">
+      <div class="px-5 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900">Available Components</h2>
+        <p class="mt-1 text-sm text-gray-600">Drag and drop or click to add components</p>
+      </div>
+      <div class="p-5">
+        <div id="available-components" class="space-y-3">
+          <% @components.each do |component| %>
+            <%= render 'component',
+                       component: component,
+                       added: @themePage.theme_page_components.exists?(component: component) %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Components -->
+    <div class="bg-white shadow-sm border border-gray-200 overflow-hidden sm:rounded-lg">
+      <div class="px-5 py-4 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900">Page Components</h2>
+        <p class="mt-1 text-sm text-gray-600">Components currently on this page</p>
+      </div>
+      <div class="p-5">
+        <div id="page-components" class="space-y-3">
+          <% if @themePage.theme_page_components.any? %>
+            <% @themePage.theme_page_components.order(:position).each do |theme_page_component| %>
+              <%= render 'theme_page_component', theme_page_component: theme_page_component %>
+            <% end %>
+          <% else %>
+            <div id="empty-components-message" class="text-center py-8">
+              <div class="w-12 h-12 mx-auto mb-4 text-gray-400">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                </svg>
+              </div>
+              <p class="text-gray-500 text-sm">No components added yet.</p>
+              <p class="text-gray-400 text-xs mt-1">Add components from the left panel to get started</p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="mt-8 flex justify-between items-center">
+    <%= link_to admin_themes_show_path(id: @theme.id),
+                class: "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200" do %>
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Back to Theme
+    <% end %>
+
+    <div id="component-stats" class="text-sm text-gray-500">
+      <%= pluralize(@components.count, 'component') %> available •
+      <%= pluralize(@themePage.theme_page_components.count, 'component') %> added
+    </div>
+  </div>
+</div>

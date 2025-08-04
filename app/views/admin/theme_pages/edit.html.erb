@@ -1,0 +1,15 @@
+<% content_for :title, "Edit Theme Page" %>
+
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Edit Theme Page</h1>
+    <p class="mt-2 text-sm text-gray-600">Update the <%= @theme_page.page_type %> page configuration and settings.</p>
+  </div>
+
+  <%= render 'form', theme_page: @theme_page %>
+
+  <div class="mt-6 flex space-x-3">
+    <%= link_to "← Back to Theme", admin_themes_show_path(@theme),
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<!-- Component Partial (_component.html.erb) -->
+<div class="group p-4 border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-sm transition-all duration-200" id="component-<%= component.id %>">
+  <div class="flex items-center justify-between">
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-3">
+        <h4 class="text-sm font-medium text-gray-900 truncate"><%= component.name %></h4>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+          <%= component.component_type %>
+        </span>
+      </div>
+    </div>
+
+    <div class="ml-4 flex-shrink-0">
+      <%
+        # Check if this component is already added to the theme page
+        is_added = defined?(added) ? added : @themePage.theme_page_components.exists?(component: component)
+      %>
+
+      <% if is_added %>
+        <span class="inline-flex items-center text-sm font-medium text-green-600">
+          <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+          Added
+        </span>
+      <% else %>
+        <%= button_to "Add Component",
+                      admin_theme_pages_add_component_path(
+                        id: @theme.id,
+                        theme_page_id: @themePage.id,
+                        component_id: component.id
+                      ),
+                      method: :patch,
+                      remote: true,
+                      class: "inline-flex items-center px-3 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200",
+                      data: {
+                        disable_with: "Adding...",
+                        turbo_method: :patch
+                      } %>
+      <% end %>
+    </div>
+  </div>
+</div>
