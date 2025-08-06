@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_one :account_setup, dependent: :destroy
   has_one :website, dependent: :destroy
+  has_many :website_services, dependent: :destroy
 
   # Instance method to get name with fallback options
   def display_name

@@ -1,0 +1,22 @@
+<% content_for :title, "Edit Service" %>
+
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Header Section -->
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="sm:flex-auto">
+      <h1 class="text-3xl font-bold text-gray-900">Edit Service</h1>
+      <p class="mt-2 text-sm text-gray-700">Update the details for "<%= @website_service.title %>"</p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex sm:space-x-3">
+      <%= link_to "View Service", manage_services_show_path(@website_service),
+                  class: "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+      <%= link_to "Back to Services", manage_services_path,
+                  class: "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="mt-8">
+    <%= render 'form' %>
+  </div>
+</div>

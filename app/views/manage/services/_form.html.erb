@@ -1,0 +1,180 @@
+<%= form_with model: @website_service, url: (@website_service.persisted? ? manage_services_show_path(@website_service) : manage_services_path), method: (@website_service.persisted? ? :patch : :post), local: true, html: { class: "space-y-6" } do |form| %>
+  <% if @website_service.errors.any? %>
+    <div class="rounded-md bg-red-50 p-4">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <h3 class="text-sm font-medium text-red-800">
+            <%= pluralize(@website_service.errors.count, "error") %> prohibited this service from being saved:
+          </h3>
+          <div class="mt-2 text-sm text-red-700">
+            <ul class="list-disc list-inside space-y-1">
+              <% @website_service.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <div class="bg-white shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <div class="px-4 py-5 sm:p-6">
+      <div class="space-y-6">
+
+        <!-- Icon Field -->
+        <div class="mb-6">
+          <%= form.label :icon, "Service Icon", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_field :icon,
+                              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500' if @website_service.errors[:icon].any?}",
+                              placeholder: "Enter icon name (e.g., fas fa-star, heroicon-star, etc.)" %>
+          <% if @website_service.errors[:icon].any? %>
+            <p class="mt-2 text-sm text-red-600"><%= @website_service.errors[:icon].first %></p>
+          <% end %>
+        </div>
+
+        <!-- Title Field -->
+        <div class="mb-6">
+          <%= form.label :title, "Service Title", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_field :title,
+                              class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500' if @website_service.errors[:title].any?}",
+                              placeholder: "Enter service title" %>
+          <% if @website_service.errors[:title].any? %>
+            <p class="mt-2 text-sm text-red-600"><%= @website_service.errors[:title].first %></p>
+          <% end %>
+        </div>
+
+        <!-- Text/Description Field -->
+        <div class="mb-6">
+          <%= form.label :text, "Service Description", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <%= form.text_area :text,
+                             rows: 8,
+                             class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{'border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:ring-red-500' if @website_service.errors[:text].any?}",
+                             placeholder: "Enter detailed service description" %>
+          <% if @website_service.errors[:text].any? %>
+            <p class="mt-2 text-sm text-red-600"><%= @website_service.errors[:text].first %></p>
+          <% end %>
+        </div>
+
+        <!-- Features Field -->
+        <div class="mb-6">
+          <%= form.label :features, "Service Features", class: "block text-sm font-medium text-gray-700 mb-2" %>
+          <div id="features-container" class="space-y-3">
+            <% features = @website_service.features.is_a?(Hash) ? @website_service.features : {} %>
+            <% if features.any? %>
+              <% features.each_with_index do |(key, value), index| %>
+                <div class="feature-item flex items-center space-x-3">
+                  <input type="text" name="website_service[features][<%= key %>]"
+                         value="<%= value %>"
+                         placeholder="Enter feature description"
+                         class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                  <button type="button" class="remove-feature inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="feature-item flex items-center space-x-3">
+                <input type="text" name="website_service[features][feature_1]"
+                       placeholder="Enter feature description"
+                       class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                <button type="button" class="remove-feature inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                  <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            <% end %>
+          </div>
+
+          <button type="button" id="add-feature" class="mt-3 inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <svg class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Feature
+          </button>
+
+          <% if @website_service.errors[:features].any? %>
+            <p class="mt-2 text-sm text-red-600"><%= @website_service.errors[:features].first %></p>
+          <% end %>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex space-x-3">
+          <%= form.submit class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+          <%= link_to "Cancel", manage_services_path,
+                      class: "inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+      (function() {
+          let featureCounter = <%= features.any? ? features.keys.count : 1 %>;
+
+          function initializeFeatures() {
+              // Add feature functionality
+              const addButton = document.getElementById('add-feature');
+              if (addButton) {
+                  addButton.addEventListener('click', function(e) {
+                      e.preventDefault();
+                      featureCounter++;
+                      const container = document.getElementById('features-container');
+                      const newFeature = document.createElement('div');
+                      newFeature.className = 'feature-item flex items-center space-x-3';
+                      newFeature.innerHTML =
+                          '<input type="text" name="website_service[features][feature_' + featureCounter + ']" ' +
+                          'placeholder="Enter feature description" ' +
+                          'class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />' +
+                          '<button type="button" class="remove-feature inline-flex items-center p-1 border border-transparent rounded-full shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">' +
+                          '<svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">' +
+                          '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />' +
+                          '</svg>' +
+                          '</button>';
+                      container.appendChild(newFeature);
+                  });
+              }
+
+              // Remove feature functionality (using event delegation)
+              const container = document.getElementById('features-container');
+              if (container) {
+                  container.addEventListener('click', function(e) {
+                      if (e.target.closest('.remove-feature')) {
+                          e.preventDefault();
+                          const featureItem = e.target.closest('.feature-item');
+                          const container = document.getElementById('features-container');
+
+                          // Only remove if there's more than one feature
+                          if (container.children.length > 1) {
+                              featureItem.remove();
+                          } else {
+                              // If it's the last one, just clear the input
+                              const input = featureItem.querySelector('input');
+                              if (input) {
+                                  input.value = '';
+                              }
+                          }
+                      }
+                  });
+              }
+          }
+
+          // Initialize when DOM is ready
+          if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', initializeFeatures);
+          } else {
+              initializeFeatures();
+          }
+      })();
+  </script>
+<% end %>

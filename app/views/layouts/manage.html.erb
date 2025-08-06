@@ -114,7 +114,7 @@
     @mouseenter="handleMouseEnter()"
     @mouseleave="handleMouseLeave()"
   >
-    <nav class="flex flex-col gap-2 p-4 text-sm" x-data="{ openUsers: false, openWebsites: false, openProducts: false, openComponents: false, openSettings: false, openReports: false, openThemes: false, openHelp: false}">
+    <nav class="flex flex-col gap-2 p-4 text-sm" x-data="{ openUsers: false, openWebsites: false, openProducts: false, openComponents: false, openSettings: false, openReports: false, openServices: false, openThemes: false, openHelp: false}">
 
       <!-- Dashboard -->
       <button class="w-full flex items-center justify-between text-gray-700 hover:bg-gray-100 py-3 px-2 rounded">
@@ -154,6 +154,27 @@
           <% end %>
 
 
+        </div>
+      </div>
+      <!-- Services-->
+      <div>
+        <button @click="openServices = !openServices" class="w-full flex items-center justify-between text-gray-700 hover:bg-gray-100 py-3 px-2 rounded">
+          <div class="flex items-center gap-3">
+            <!-- Document icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" id="Wrench--Streamline-Font-Awesome" height="20" width="20">
+              <path d="M13.75 12.5c3.453125 0 6.25 -2.796875 6.25 -6.25 0 -0.59765625 -0.0859375 -1.17578125 -0.2421875 -1.7265625 -0.12109375 -0.421875 -0.640625 -0.515625 -0.94921875 -0.20703125l-3 3c-0.1171875 0.1171875 -0.27734375 0.18359375 -0.44140625 0.18359375H13.125c-0.34375 0 -0.625 -0.28125 -0.625 -0.625v-2.2421875c0 -0.1640625 0.06640625 -0.32421875 0.18359375 -0.44140625l3 -3c0.30859375 -0.30859375 0.2109375 -0.828125 -0.20703125 -0.94921875C14.92578125 0.0859375 14.34765625 0 13.75 0c-3.453125 0 -6.25 2.796875 -6.25 6.25 0 0.74609375 0.1328125 1.46484375 0.37109375 2.12890625L0.77734375 15.47265625C0.28125 15.96875 0 16.64453125 0 17.34765625 0 18.8125 1.1875 20 2.65234375 20c0.703125 0 1.37890625 -0.28125 1.875 -0.77734375l7.09375 -7.09375c0.6640625 0.2421875 1.3828125 0.37109375 2.12890625 0.37109375zM3.125 15.9375a0.9375 0.9375 0 1 1 0 1.875 0.9375 0.9375 0 1 1 0 -1.875z" fill="#9ca3af" stroke-width="0.0391"></path>
+            </svg>
+            <span x-show="sidebarOpen" x-transition.opacity>Services</span>
+          </div>
+          <div x-show="sidebarOpen" :class="{ 'rotate-180': openServices }" class="transition-transform duration-200">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="12" height="12">
+              <path d="M18.023 30.378c1.093 1.093 2.869 1.093 3.962 0l16.794-16.794c1.093-1.093 1.093-2.869 0-3.962s-2.869-1.093-3.962 0L20 24.439 5.182 9.63c-1.093-1.093-2.869-1.093-3.962 0s-1.093 2.869 0 3.962l16.794 16.794z" fill="#9ca3af"/>
+            </svg>
+          </div>
+        </button>
+        <div x-show="openServices && sidebarOpen" class="mt-1">
+          <%= link_to 'All Services', manage_services_path, class: 'block text-gray-700 hover:bg-gray-100 py-3 px-2 rounded' %>
+          <%= link_to 'Add New Service', manage_services_new_path, class: 'block text-gray-700 hover:bg-gray-100 py-3 px-2 rounded' %>
         </div>
       </div>
       <% if current_user.account_setup.package_type == 'ecommerce' %>

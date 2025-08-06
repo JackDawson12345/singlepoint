@@ -73,6 +73,7 @@ Rails.application.routes.draw do
   end
 
   namespace :manage do
+    get "services/index"
     # Dashboard
     get "/", to: 'dashboard#index', as: 'dashboard'
 
@@ -89,6 +90,7 @@ Rails.application.routes.draw do
     get "/website/settings", to: 'websites#settings', as: 'website_settings'
     post "/website/settings_save", to: 'websites#settings_save', as: 'website_settings_save'
     get "/website/preview/:page_slug", to: 'websites#preview', as: 'website_preview'
+    get "/website/preview/services/:service_slug", to: 'websites#preview', as: 'website_preview_services'
     get "website/preview", to: redirect('manage/website/preview/home')
     post "/website", to: 'websites#create'
     patch "/website/:id", to: 'websites#update'
@@ -100,6 +102,15 @@ Rails.application.routes.draw do
     get '/website/editor/:page_slug/:theme_page_id/:component_id/edit_form', to: 'website_builder#edit_form', as: 'component_edit_form'
     patch '/website/editor/:page_slug/:theme_page_id/:component_id/update_customization', to: 'website_builder#update_customization', as: 'update_component_customization'
 
+    # Services
+    get "/services", to: 'services#index', as: 'services'
+    get "/services/new", to: 'services#new', as: 'services_new'
+    get "/services/:id", to: 'services#show', as: 'services_show'
+    get "/services/:id/edit", to: 'services#edit', as: 'services_edit'
+    post "/services", to: 'services#create'
+    patch "/services/:id", to: 'services#update'
+    put "/services/:id", to: 'services#update'
+    delete "/services/:id", to: 'services#destroy'
 
   end
 end

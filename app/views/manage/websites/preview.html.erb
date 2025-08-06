@@ -45,6 +45,20 @@
     <% end %>
   <% end %>
 
+  <% @components.each do |component| %>
+
+    <% if component.name == 'Service Inner' %>
+      <% if component.html_content.present? %>
+        <%= raw component.rendered_manage_service_inner_html_content(@theme, @user, @theme_page, component, @service) %>
+      <% end %>
+    <% else %>
+      <% if component.html_content.present? %>
+        <%= raw component.rendered_manage_html_content(@theme, @user, @theme_page, component) %>
+      <% end %>
+    <% end %>
+
+  <% end %>
+
   <script>
       <% @components.each do |component| %>
         <% if component.js_content.present? %>

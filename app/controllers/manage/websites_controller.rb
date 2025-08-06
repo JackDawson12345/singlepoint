@@ -42,9 +42,16 @@ class Manage::WebsitesController < ApplicationController
   end
 
   def preview
+
     @user = current_user
     @theme = @user.website.theme
-    @theme_page = ThemePage.find_by_slug(params[:page_slug])
+    if params[:service_slug].present?
+      @theme_page = ThemePage.where(theme_id: @theme.id, page_type: 'Inner Service Page').first
+      @service = WebsiteService.find_by_slug(params[:service_slug])
+    else
+      @theme_page = ThemePage.find_by_slug(params[:page_slug])
+    end
+
     @components = Component.joins(:theme_page_components)
                            .where(theme_page_components: { theme_page_id: @theme_page.id })
                            .order('theme_page_components.position')

@@ -1,0 +1,70 @@
+<% content_for :title, @website_service.title %>
+
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Header Section -->
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="sm:flex-auto">
+      <h1 class="text-3xl font-bold text-gray-900"><%= @website_service.title %></h1>
+      <p class="mt-2 text-sm text-gray-700">Service details and information</p>
+    </div>
+    <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex sm:space-x-3">
+      <%= link_to "Edit", manage_services_edit_path(@website_service),
+                  class: "inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+      <%= link_to "Delete", manage_services_show_path(@website_service),
+                  method: :delete,
+                  data: { confirm: "Are you sure you want to delete this service?" },
+                  class: "inline-flex items-center justify-center rounded-md border border-red-300 bg-white px-4 py-2 text-sm font-medium text-red-700 shadow-sm hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+      <%= link_to "Back to Services", manage_services_path,
+                  class: "inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+    </div>
+  </div>
+
+  <!-- Service Details Card -->
+  <div class="mt-8">
+    <div class="bg-white overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+
+        <!-- Basic Information Row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide">Website</h3>
+            <p class="mt-2 text-base text-gray-700"><%= current_user.website.name || "N/A" %></p>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide">Title</h3>
+            <p class="mt-2 text-base text-gray-700"><%= @website_service.title %></p>
+          </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="mb-8">
+          <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wide mb-4">Description</h3>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="text-gray-700 leading-relaxed">
+              <%= simple_format(@website_service.text) %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timestamps Row -->
+        <div class="border-t border-gray-200 pt-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wide">Created</h4>
+              <p class="mt-1 text-sm text-gray-600">
+                <%= @website_service.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+              </p>
+            </div>
+            <div>
+              <h4 class="text-xs font-medium text-gray-500 uppercase tracking-wide">Last Updated</h4>
+              <p class="mt-1 text-sm text-gray-600">
+                <%= @website_service.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

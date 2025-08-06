@@ -21,6 +21,7 @@ class Manage::WebsiteBuilderController < ApplicationController
     @theme = @theme_page.theme
     @page_slug = params[:page_slug]
     @editable_fields = JSON.parse(@component.editable_fields)
+    @field_types = JSON.parse(@component.field_types)
 
     # Get existing customizations
     existing_customizations = WebsitesCustomisation.where(

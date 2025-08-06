@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_05_151152) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_06_134913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,6 +85,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_151152) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "website_services", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "features"
+    t.string "icon"
+    t.string "slug"
+    t.index ["user_id"], name: "index_website_services_on_user_id"
+  end
+
   create_table "websites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "theme_id", null: false
@@ -114,6 +126,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_05_151152) do
   add_foreign_key "theme_page_components", "components"
   add_foreign_key "theme_page_components", "theme_pages"
   add_foreign_key "theme_pages", "themes"
+  add_foreign_key "website_services", "users"
   add_foreign_key "websites", "themes"
   add_foreign_key "websites", "users"
   add_foreign_key "websites_customisations", "components"
