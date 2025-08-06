@@ -1,0 +1,146 @@
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900"><%= @website.name %></h1>
+        <p class="mt-2 text-sm text-gray-600">Website details and configuration overview</p>
+      </div>
+      <div class="flex space-x-3">
+        <%= link_to "Edit Website", admin_websites_edit_path(@website),
+                    class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <% if @website.published? %>
+          <%= link_to "View Live Site", @website.user.account_setup.domain_name, target: "_blank",
+                      class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Website Information</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Basic details and configuration settings for this website.</p>
+    </div>
+    <div class="border-t border-gray-200">
+      <dl>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Website Name</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><%= @website.name %></dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Owner</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <% if @website.user %>
+              <div class="flex items-center">
+                <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center mr-3">
+                  <span class="text-xs font-medium text-white">
+                    <%= @website.user.first_name&.first&.upcase %><%= @website.user.last_name&.first&.upcase %>
+                  </span>
+                </div>
+                <div>
+                  <div class="text-sm font-medium text-gray-900"><%= @website.user.display_name %></div>
+                  <div class="text-sm text-gray-500"><%= @website.user.email %></div>
+                </div>
+              </div>
+            <% else %>
+              <span class="text-gray-400">No owner assigned</span>
+            <% end %>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Theme</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <% if @website.theme %>
+              <%= @website.theme.name %>
+            <% else %>
+              <span class="text-gray-400">No theme selected</span>
+            <% end %>
+          </dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Status</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <span class="inline-flex rounded-full px-2 text-xs font-semibold leading-5 <%= @website.published? ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+              <%= @website.published? ? 'Published' : 'Draft' %>
+            </span>
+          </dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Created</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <%= @website.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+          </dd>
+        </div>
+        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+          <dt class="text-sm font-medium text-gray-500">Last Updated</dt>
+          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+            <%= @website.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+          </dd>
+        </div>
+        <% if @website.user.account_setup.domain_name.present? %>
+          <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">Website URL</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= link_to @website.user.account_setup.domain_name, @website.user.account_setup.domain_name, target: "_blank", class: "text-indigo-600 hover:text-indigo-900" %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+
+
+
+  <!-- Quick Actions Section -->
+  <div class="mt-8 bg-white shadow overflow-hidden sm:rounded-lg">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Quick Actions</h3>
+      <p class="mt-1 max-w-2xl text-sm text-gray-500">Common actions for managing this website.</p>
+    </div>
+    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+      <div class="flex flex-wrap gap-3">
+        <%= link_to "Edit Website", admin_websites_edit_path(@website),
+                    class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+
+        <% if @website.published? %>
+          <%= link_to "Unpublish", admin_websites_path(@website), method: :patch,
+                      data: { confirm: "Are you sure you want to unpublish this website?" },
+                      class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500" %>
+        <% else %>
+          <%= link_to "Publish", admin_websites_path(@website), method: :patch,
+                      data: { confirm: "Are you sure you want to publish this website?" },
+                      class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+        <% end %>
+
+        <% if @website.published? && @website.user.account_setup.domain_name.present? %>
+          <%= link_to "View Live Site", @website.user.account_setup.domain_name, target: "_blank",
+                      class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+        <% end %>
+
+        <%= link_to "Duplicate Website", admin_websites_path, method: :post,
+                    data: { website: { name: "#{@website.name} (Copy)", user_id: @website.user_id, theme_id: @website.theme_id, published: false } },
+                    class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+
+        <%= link_to "Delete Website", admin_websites_path(@website), method: :delete,
+                    data: { confirm: "Are you sure you want to delete this website? This action cannot be undone." },
+                    class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="mt-8 flex justify-between">
+    <%= link_to "← Back to Websites", admin_websites_path,
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+
+    <div class="flex space-x-3">
+      <% if @website.user.present? %>
+        <%= link_to "View Owner", admin_users_show_path(@website.user),
+                    class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      <% end %>
+
+      <%= link_to "Edit Website", admin_websites_edit_path(@website),
+                  class: "inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  </div>
+</div>

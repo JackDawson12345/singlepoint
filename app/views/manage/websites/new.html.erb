@@ -1,0 +1,17 @@
+<!-- app/views/manage/websites/new.html.erb -->
+<div class="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-2xl mx-auto">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Create New Website</h1>
+      <p class="text-gray-600">Set up your new website in just two simple steps</p>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-xl p-8">
+      <%= render 'form', website: @website %>
+    </div>
+
+    <div class="text-center mt-6">
+      <%= link_to 'Back to Dashboard', manage_dashboard_path, class: 'text-gray-600 hover:text-gray-900 transition-colors' %>
+    </div>
+  </div>
+</div>

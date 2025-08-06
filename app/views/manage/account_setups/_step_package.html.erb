@@ -1,0 +1,126 @@
+<!-- app/views/manage/account_setups/_step_package.html.erb -->
+<%= form_with model: @account_setup,
+              url: manage_account_setup_update_step_path(step: @current_step),
+              method: :patch,
+              local: true,
+              data: { turbo: false },
+              class: "space-y-6" do |form| %>
+
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-2">Choose Your Package</h2>
+    <p class="text-gray-600">Select the package that best fits your needs</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Bespoke Package -->
+    <label class="relative cursor-pointer block">
+      <%= form.radio_button :package_type, 'bespoke',
+                            class: "sr-only package-radio",
+                            checked: @account_setup.package_type == 'bespoke',
+                            id: "package_bespoke" %>
+      <div class="package-option border-2 rounded-lg p-6 hover:border-gray-300 transition-colors
+                  <%= @account_setup.package_type == 'bespoke' ? 'border-blue-500 bg-blue-50' : 'border-gray-200' %>">
+        <div class="text-center">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Bespoke</h3>
+          <div class="text-3xl font-bold text-blue-600 mb-4">£2,999</div>
+          <ul class="text-left space-y-2 text-sm text-gray-600">
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Custom design & development
+            </li>
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Unlimited revisions
+            </li>
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              SEO optimized
+            </li>
+          </ul>
+        </div>
+      </div>
+    </label>
+
+    <!-- E-commerce Package -->
+    <label class="relative cursor-pointer block">
+      <%= form.radio_button :package_type, 'ecommerce',
+                            class: "sr-only package-radio",
+                            checked: @account_setup.package_type == 'ecommerce',
+                            id: "package_ecommerce" %>
+      <div class="package-option border-2 rounded-lg p-6 hover:border-gray-300 transition-colors
+                  <%= @account_setup.package_type == 'ecommerce' ? 'border-blue-500 bg-blue-50' : 'border-gray-200' %>">
+        <div class="text-center">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">E-commerce</h3>
+          <div class="text-3xl font-bold text-blue-600 mb-4">£4,999</div>
+          <ul class="text-left space-y-2 text-sm text-gray-600">
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Everything in Bespoke
+            </li>
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Full e-commerce functionality
+            </li>
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Payment gateway integration
+            </li>
+            <li class="flex items-center">
+              <svg class="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Inventory management
+            </li>
+          </ul>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <% if @account_setup.errors[:package_type].any? %>
+    <p class="text-sm text-red-600 text-center"><%= @account_setup.errors[:package_type].first %></p>
+  <% end %>
+
+  <div class="flex justify-between pt-4">
+    <%= link_to "Back", manage_account_setup_step_path(step: @account_setup.previous_step),
+                class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors" %>
+    <%= form.submit "Continue", class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors" %>
+  </div>
+<% end %>
+
+<script>
+    // Add JavaScript to handle visual selection feedback
+    document.addEventListener('DOMContentLoaded', function() {
+        const packageRadios = document.querySelectorAll('.package-radio');
+
+        packageRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                // Remove selected styles from all options
+                document.querySelectorAll('.package-option').forEach(function(option) {
+                    option.classList.remove('border-blue-500', 'bg-blue-50');
+                    option.classList.add('border-gray-200');
+                });
+
+                // Add selected styles to the chosen option
+                if (this.checked) {
+                    const parentLabel = this.closest('label');
+                    const optionDiv = parentLabel.querySelector('.package-option');
+                    optionDiv.classList.remove('border-gray-200');
+                    optionDiv.classList.add('border-blue-500', 'bg-blue-50');
+                }
+            });
+        });
+    });
+</script>

@@ -95,6 +95,14 @@
                         </svg>
                         Edit
                       <% end %>
+                      <%= link_to admin_theme_pages_preview_path(id: @theme.id, theme_page_id: themePage.id),
+                                  class: "inline-flex items-center px-3 py-2 text-sm font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 hover:border-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" do %>
+                        <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" id="Eye--Streamline-Bootstrap" height="16" width="16">
+                          <path d="M16 8s-3 -5.5 -8 -5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66 -2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-0.086 0.13 -0.195 0.288c-0.335 0.48 -0.83 1.12 -1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879 -1.168 -5.168 -2.457A13 13 0 0 1 1.172 8z" stroke-width="1"></path>
+                          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0 -5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1 -7 0" stroke-width="1"></path>
+                        </svg>
+                        Preview
+                      <% end %>
                       <%= link_to admin_themes_path,
                                   class: "inline-flex items-center px-3 py-2 text-sm font-medium text-red-600 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 hover:border-red-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
                                   data: { confirm: "Are you sure you want to delete this page?" } do %>

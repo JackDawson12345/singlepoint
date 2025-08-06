@@ -1,0 +1,27 @@
+<!-- app/views/manage/account_setups/step.html.erb -->
+<div class="max-w-2xl mx-auto py-8">
+  <!-- Progress Bar -->
+  <div class="mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <% @account_setup.steps[0..-2].each_with_index do |step, index| %>
+        <div class="flex flex-col items-center">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium
+                      <%= step_classes(step, @current_step, @account_setup.steps) %>">
+            <%= index + 1 %>
+          </div>
+          <span class="text-xs mt-1 capitalize <%= step == @current_step ? 'text-blue-600 font-medium' : 'text-gray-500' %>">
+            <%= step.humanize %>
+          </span>
+        </div>
+        <% unless step == @account_setup.steps[-2] %>
+          <div class="flex-1 h-0.5 mx-4 <%= step_complete?(step, @current_step, @account_setup.steps) ? 'bg-blue-600' : 'bg-gray-200' %>"></div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Step Content -->
+  <div class="bg-white shadow-lg rounded-lg p-6">
+    <%= render "step_#{@current_step}" %>
+  </div>
+</div>

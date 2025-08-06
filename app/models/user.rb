@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_one :account_setup, dependent: :destroy
+  has_one :website, dependent: :destroy
+
   # Instance method to get name with fallback options
   def display_name
     if first_name.present? && last_name.present?

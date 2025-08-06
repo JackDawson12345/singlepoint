@@ -1,0 +1,21 @@
+<style>
+  <% @components.each do |component| %>
+  <% if component.css_content.present? %>
+  <%= raw component.css_content %>
+  <% end %>
+  <% end %>
+</style>
+
+<% @components.each do |component| %>
+  <% if component.html_content.present? %>
+    <%= raw component.rendered_html_content(@theme, current_user) %>
+  <% end %>
+<% end %>
+
+<script>
+    <% @components.each do |component| %>
+    <% if component.js_content.present? %>
+    <%= raw component.js_content %>
+    <% end %>
+    <% end %>
+</script>

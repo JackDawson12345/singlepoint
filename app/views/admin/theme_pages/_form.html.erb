@@ -1,4 +1,10 @@
-<%= form_with(model: @theme_page, url: (@theme_page.persisted? ? admin_theme_pages_path(@theme_page) : admin_theme_pages_path), method: (@theme_page.persisted? ? :patch : :post), local: true, class: "mx-auto") do |form| %>
+<%= form_with(model: @theme_page,
+              url: (@theme_page.persisted? ?
+                      "/admin/theme-pages/#{@theme_page.id}" :
+                      admin_theme_pages_path),
+              method: (@theme_page.persisted? ? :patch : :post),
+              local: true,
+              class: "mx-auto") do |form| %>
   <% if @theme_page.errors.any? %>
     <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-md">
       <div class="flex">

@@ -1,0 +1,95 @@
+<!-- app/views/manage/account_setups/_step_support.html.erb -->
+<%= form_with model: @account_setup,
+              url: manage_account_setup_update_step_path(step: @current_step),
+              method: :patch,
+              local: true,
+              data: { turbo: false },
+              class: "space-y-6" do |form| %>
+
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-2">Support Options</h2>
+    <p class="text-gray-600">How would you like to manage your website?</p>
+  </div>
+
+  <div class="space-y-4">
+    <!-- Do it myself -->
+    <label class="relative cursor-pointer block">
+      <%= form.radio_button :support_option, 'do_it_myself',
+                            class: "sr-only support-radio",
+                            checked: @account_setup.support_option == 'do_it_myself',
+                            id: "support_do_it_myself" %>
+      <div class="support-option border-2 rounded-lg p-6 hover:border-gray-300 transition-colors
+                  <%= @account_setup.support_option == 'do_it_myself' ? 'border-blue-500 bg-blue-50' : 'border-gray-200' %>">
+        <div class="flex items-start">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">I'll do it myself</h3>
+            <p class="text-gray-600 mb-3">You'll receive your completed website and manage it independently. Perfect if you have technical experience or want full control.</p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• Complete website delivered</li>
+              <li>• Documentation provided</li>
+              <li>• No ongoing support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </label>
+
+    <!-- Need help -->
+    <label class="relative cursor-pointer block">
+      <%= form.radio_button :support_option, 'need_help',
+                            class: "sr-only support-radio",
+                            checked: @account_setup.support_option == 'need_help',
+                            id: "support_need_help" %>
+      <div class="support-option border-2 rounded-lg p-6 hover:border-gray-300 transition-colors
+                  <%= @account_setup.support_option == 'need_help' ? 'border-blue-500 bg-blue-50' : 'border-gray-200' %>">
+        <div class="flex items-start">
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">I need help managing it</h3>
+            <p class="text-gray-600 mb-3">We'll provide ongoing support and maintenance for your website. Great if you prefer to focus on your business while we handle the technical aspects.</p>
+            <ul class="text-sm text-gray-500 space-y-1">
+              <li>• Complete website delivered</li>
+              <li>• Ongoing technical support</li>
+              <li>• Regular updates & maintenance</li>
+              <li>• Priority support tickets</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <% if @account_setup.errors[:support_option].any? %>
+    <p class="text-sm text-red-600 text-center"><%= @account_setup.errors[:support_option].first %></p>
+  <% end %>
+
+  <div class="flex justify-between pt-4">
+    <%= link_to "Back", manage_account_setup_step_path(step: @account_setup.previous_step),
+                class: "bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium transition-colors" %>
+    <%= form.submit "Continue", class: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors" %>
+  </div>
+<% end %>
+
+<script>
+    // Add JavaScript to handle visual selection feedback
+    document.addEventListener('DOMContentLoaded', function() {
+        const supportRadios = document.querySelectorAll('.support-radio');
+
+        supportRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                // Remove selected styles from all options
+                document.querySelectorAll('.support-option').forEach(function(option) {
+                    option.classList.remove('border-blue-500', 'bg-blue-50');
+                    option.classList.add('border-gray-200');
+                });
+
+                // Add selected styles to the chosen option
+                if (this.checked) {
+                    const parentLabel = this.closest('label');
+                    const optionDiv = parentLabel.querySelector('.support-option');
+                    optionDiv.classList.remove('border-gray-200');
+                    optionDiv.classList.add('border-blue-500', 'bg-blue-50');
+                }
+            });
+        });
+    });
+</script>

@@ -31,4 +31,14 @@ class ApplicationController < ActionController::Base
       root_path
     end
   end
+
+  def account_setup?
+    if current_user.account_setup.nil?
+      redirect_to manage_account_setup_path
+    elsif current_user.account_setup.payment_status != 'completed'
+      redirect_to manage_account_setup_path
+    else
+
+    end
+  end
 end

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  website: one
+  component: one
+  theme_page: one
+  field_name: MyString
+  field_value: MyString
+  field_styling: MyString
+
+two:
+  website: two
+  component: two
+  theme_page: two
+  field_name: MyString
+  field_value: MyString
+  field_styling: MyString

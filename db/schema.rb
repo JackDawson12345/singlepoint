@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_04_102335) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_05_151152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "account_setups", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "domain_name"
+    t.string "package_type"
+    t.string "support_option"
+    t.string "payment_status", default: "pending"
+    t.string "stripe_payment_intent_id"
+    t.datetime "paid_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_account_setups_on_user_id"
+  end
 
   create_table "components", force: :cascade do |t|
     t.string "name"
@@ -45,6 +58,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_102335) do
     t.text "package", default: "Bespoke"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
     t.index ["theme_id"], name: "index_theme_pages_on_theme_id"
   end
 
@@ -71,7 +85,38 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_04_102335) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "websites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "theme_id", null: false
+    t.string "name"
+    t.boolean "published", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_websites_on_theme_id"
+    t.index ["user_id"], name: "index_websites_on_user_id"
+  end
+
+  create_table "websites_customisations", force: :cascade do |t|
+    t.bigint "website_id", null: false
+    t.bigint "component_id", null: false
+    t.bigint "theme_page_id", null: false
+    t.string "field_name"
+    t.string "field_value"
+    t.string "field_styling"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_id"], name: "index_websites_customisations_on_component_id"
+    t.index ["theme_page_id"], name: "index_websites_customisations_on_theme_page_id"
+    t.index ["website_id"], name: "index_websites_customisations_on_website_id"
+  end
+
+  add_foreign_key "account_setups", "users"
   add_foreign_key "theme_page_components", "components"
   add_foreign_key "theme_page_components", "theme_pages"
   add_foreign_key "theme_pages", "themes"
+  add_foreign_key "websites", "themes"
+  add_foreign_key "websites", "users"
+  add_foreign_key "websites_customisations", "components"
+  add_foreign_key "websites_customisations", "theme_pages"
+  add_foreign_key "websites_customisations", "websites"
 end

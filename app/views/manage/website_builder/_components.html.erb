@@ -1,0 +1,25 @@
+<!-- app/views/manage/website_builder/_components.html.erb -->
+<%# Use local variables if passed, otherwise use instance variables %>
+<% components ||= @components %>
+<% theme ||= @theme %>
+<% theme_page ||= @theme_page %>
+<%# Make sure current_user is available - try multiple sources %>
+<% user = defined?(current_user) ? current_user : @user %>
+
+<% components.each do |component| %>
+  <div class="component-section theme-<%= theme_page.id %>-component-<%= component.id %> relative">
+    <% if component.editable_fields.present? %>
+      <button type="button"
+              class="edit-component-btn absolute top-4 right-4 py-2 px-4 text-white"
+              style="background: #7c3aed"
+              data-theme-id="<%= theme_page.id %>"
+              data-component-id="<%= component.id %>"
+              onclick="return false;">
+        Edit Component
+      </button>
+    <% end %>
+    <% if component.html_content.present? %>
+      <%= raw component.rendered_manage_html_content(theme, user, theme_page, component) %>
+    <% end %>
+  </div>
+<% end %>

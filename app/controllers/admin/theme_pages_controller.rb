@@ -169,9 +169,13 @@ class Admin::ThemePagesController < ApplicationController
 
   def edit
     @theme = Theme.find(params[:id])
+    @theme_page = ThemePage.find(params[:theme_page_id])
   end
 
   def update
+
+    @theme_page.slug = @theme_page.page_type.downcase.gsub(' ', '-')
+
     if @theme_page.update(theme_page_params)
       redirect_to admin_themes_show_path(id: @theme_page.theme_id), notice: 'Theme page was successfully updated.'
     else
@@ -184,10 +188,19 @@ class Admin::ThemePagesController < ApplicationController
     redirect_to admin_theme_pages_path, notice: 'Theme page was successfully deleted.'
   end
 
+  def preview
+    @theme = Theme.find(params[:id])
+    @theme_page = ThemePage.find(params[:theme_page_id])
+    @components = Component.joins(:theme_page_components)
+                           .where(theme_page_components: { theme_page_id: @theme_page.id })
+                           .order('theme_page_components.position')
+  end
+
   private
 
   def set_theme_page
-    @theme_page = ThemePage.find(params[:id])
+    theme_page_id = params[:theme_page_id] || params[:id]
+    @theme_page = ThemePage.find(theme_page_id)
   end
 
   def theme_page_params

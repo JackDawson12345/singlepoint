@@ -1,0 +1,15 @@
+<div class="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Edit Website</h1>
+    <p class="mt-2 text-sm text-gray-600">Update <%= @website.name %>'s configuration, theme, and publishing settings.</p>
+  </div>
+
+  <%= render 'form', website: @website %>
+
+  <div class="mt-6 flex space-x-3">
+    <%= link_to "← Back to Website", admin_websites_show_path(@website),
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <%= link_to "View All Websites", admin_websites_path,
+                class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
+</div>

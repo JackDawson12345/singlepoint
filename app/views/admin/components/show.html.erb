@@ -65,6 +65,13 @@
               </div>
             <% end %>
 
+            <% if @component.field_types.present? %>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Field Types</label>
+                <div class="text-gray-900 whitespace-pre-wrap bg-gray-50 rounded-md p-3 text-sm"><%= @component.field_types %></div>
+              </div>
+            <% end %>
+
             <% if @component.template_patterns.present? %>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Template Patterns</label>
